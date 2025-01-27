@@ -1,4 +1,3 @@
-# Braker3 Run
 # Braker3 Pipeline for Necator americanus Genome Annotation
 
 ## Overview
