@@ -25,31 +25,35 @@ module load trf
 ## Step 2: Set Up Environment
 -Set the path to your local RepeatMasker installation:
 
-'''bash
+```bash
 export PATH=/work/fauverlab/zachpella/RepeatMasker:$PATH'''
+```
 
 ## Navigate to the working directory:
 
-'''bash
-cd /work/fauverlab/zachpella '''
+```bash
+cd /work/fauverlab/zachpella
+```
 
 ## Step 3: Trim FASTA Headers
 -Trim the FASTA headers to a maximum of 30 characters using awk:
 
-'''bash
+```bash
 awk '/^>/ {
    original_id = substr($0, 2);
    new_id = substr(original_id, 1, 30);
    $0 = ">" new_id;
 } 1' input_genome.fasta > braker_ready_genome.fasta'''
+```
 
 ## This command processes the input FASTA file MaSuRCA_config_purged_namericanus_withMito.fasta and outputs a new file trimmed_header_genome.fasta with trimmed headers.
 
 ## Step 4: Run RepeatMasker
 -Execute RepeatMasker on the trimmed genome FASTA file:
 
-'''bash
-./RepeatMasker/RepeatMasker braker_ready_genome.fasta'''
+```bash
+./RepeatMasker/RepeatMasker braker_ready_genome.fasta
+```
 
 ## This command runs RepeatMasker with the default configuration on the trimmed_header_genome.fasta file.
 
