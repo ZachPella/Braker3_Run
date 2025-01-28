@@ -71,6 +71,7 @@ export AUGUSTUS_SCRIPTS_PATH=/usr/bin/augustus_scripts
 
 ## Modifying $PATH
 - Current Bash Session
+
 ```bash
 PATH=/your_path_to_augustus/bin/:/your_path_to_augustus/scripts/:$PATH
 export PATH
