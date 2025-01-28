@@ -7,9 +7,8 @@ Ensure Singularity is installed on your system. If not, follow the official inst
 Step 2: Build the Singularity Image (.sif file)
 To build the Singularity image from the Docker container teambraker/braker3:latest, run the following command:
 
-bash
-Copy
-singularity build braker3.sif docker://teambraker/braker3:latest
+'''bash
+singularity build braker3.sif docker://teambraker/braker3:latest'''
 Explanation:
 singularity build: Builds a Singularity image.
 
@@ -22,9 +21,8 @@ This command downloads the Docker container and converts it into a Singularity i
 Step 3: Run BRAKER3 Using the Singularity Container
 To execute BRAKER3 using the Singularity container, use the following command:
 
-bash
-Copy
-singularity exec braker3.sif braker.pl
+'''bash
+singularity exec braker3.sif braker.pl'''
 Explanation:
 singularity exec: Executes a command within the Singularity container.
 
@@ -37,10 +35,9 @@ By default, Singularity automatically mounts the user's home directory, so your 
 Example Usage
 Here’s an example of running BRAKER3 with input files:
 
-bash
-Copy
+'''bash
 singularity exec braker3.sif braker.pl --genome=genome.fa --bam=alignment.bam --species=myspecies
-Replace genome.fa, alignment.bam, and myspecies with your actual input files and species name.
+Replace genome.fa, alignment.bam, and myspecies with your actual input files and species name.'''
 
 Notes
 Ensure you have the necessary input files (e.g., genome FASTA, BAM files) in your working directory or provide the correct paths.
