@@ -10,11 +10,11 @@ The pipeline is organized into the following directories:
 | Directory/File                     | Description                                                                 |
 |------------------------------------|-----------------------------------------------------------------------------|
 | `braker_run/`                      | Root directory for the Braker3 pipeline.                                    |
-| ├── `braker_directories/`          | Directory for Braker3 intermediate files.                                   |
-| ├── `Download_Augustus.md`         | Instructions for downloading AUGUSTUS.                                      |
-| ├── `Download_GeneMark.md`         | Instructions for downloading GeneMark.                                      |
-| ├── `Download_HISAT2_and_SRAtoolkit.md` | Instructions for downloading HISAT2 and SRA toolkit.                     |
-| ├── `other_downloads_for_GeneMark.md` | Additional instructions for GeneMark setup.                              |
+| ├── `braker_directories/`          | Directory for Braker3 intermediate files and setup instructions.            |
+| │   ├── `Download_Augustus.md`     | Instructions for downloading AUGUSTUS.                                      |
+| │   ├── `Download_GeneMark.md`     | Instructions for downloading GeneMark.                                      |
+| │   ├── `Download_HISAT2_and_SRAtoolkit.md` | Instructions for downloading HISAT2 and SRA toolkit.                     |
+| │   └── `other_downloads_for_GeneMark.md` | Additional instructions for GeneMark setup.                              |
 | ├── `genomes/`                     | Directory for genome files.                                                 |
 | ├── `post_braker/`                 | Directory for post-Braker analysis scripts.                                 |
 | │   ├── `blast_analysis/`          | Directory for BLAST analysis scripts.                                       |
