@@ -26,13 +26,13 @@ module load trf
 -Set the path to your local RepeatMasker installation:
 
 ```bash
-export PATH=/work/fauverlab/zachpella/RepeatMasker:$PATH'''
+export PATH=/work/RepeatMasker:$PATH'''
 ```
 
 ## Navigate to the working directory:
 
 ```bash
-cd /work/fauverlab/zachpella
+cd /work
 ```
 
 ## Step 3: Trim FASTA Headers
