@@ -5,35 +5,36 @@ This pipeline implements Braker3 for annotating the Necator americanus genome us
 ## Directory Structure
 The pipeline is organized into the following directories:
 
-braker_run/
-├── braker_directories/
-│   └── .gitkeep
-├── Download_Augustus.md
-├── Download_GeneMark.md
-├── Download_HISAT2_and_SRAtoolkit.md
-├── other_downloads_for_GeneMark.md
-├── genomes/
-│   └── .gitkeep
-├── post_braker/
-│   ├── blast_analysis/
-│   │   ├── .gitkeep
-│   │   └── run_blast.sh
-│   ├── busco_analysis/
-│   │   ├── .gitkeep
-│   │   └── run_busco.sh
-│   ├── interproscan_analysis/
-│   │   ├── .gitkeep
-│   │   └── run_interproscan.sh
-│   └── orthofinder_analysis/
-│       ├── .gitkeep
-│       └── quality_check_braker.aa_file.sh
-├── pre_braker/
-│   ├── proteins/
-│   │   └── .gitkeep
-│   └── .gitkeep
-├── README.md
-└── braker3sif.md
-
+| Directory/File                     | Description                                                                 |
+|------------------------------------|-----------------------------------------------------------------------------|
+| `braker_run/`                      | Root directory for the Braker3 pipeline.                                    |
+| ├── `braker_directories/`          | Directory for Braker3 intermediate files.                                   |
+| │   └── `.gitkeep`                 | Empty file to preserve the directory in Git.                                |
+| ├── `Download_Augustus.md`         | Instructions for downloading AUGUSTUS.                                      |
+| ├── `Download_GeneMark.md`         | Instructions for downloading GeneMark.                                      |
+| ├── `Download_HISAT2_and_SRAtoolkit.md` | Instructions for downloading HISAT2 and SRA toolkit.                     |
+| ├── `other_downloads_for_GeneMark.md` | Additional instructions for GeneMark setup.                              |
+| ├── `genomes/`                     | Directory for genome files.                                                 |
+| │   └── `.gitkeep`                 | Empty file to preserve the directory in Git.                                |
+| ├── `post_braker/`                 | Directory for post-Braker analysis scripts.                                 |
+| │   ├── `blast_analysis/`          | Directory for BLAST analysis scripts.                                       |
+| │   │   ├── `.gitkeep`             | Empty file to preserve the directory in Git.                                |
+| │   │   └── `run_blast.sh`         | Script to run BLAST analysis.                                               |
+| │   ├── `busco_analysis/`          | Directory for BUSCO analysis scripts.                                       |
+| │   │   ├── `.gitkeep`             | Empty file to preserve the directory in Git.                                |
+| │   │   └── `run_busco.sh`         | Script to run BUSCO analysis.                                               |
+| │   ├── `interproscan_analysis/`   | Directory for InterProScan analysis scripts.                                |
+| │   │   ├── `.gitkeep`             | Empty file to preserve the directory in Git.                                |
+| │   │   └── `run_interproscan.sh`  | Script to run InterProScan analysis.                                        |
+| │   └── `orthofinder_analysis/`    | Directory for OrthoFinder analysis scripts.                                 |
+| │       ├── `.gitkeep`             | Empty file to preserve the directory in Git.                                |
+| │       └── `quality_check_braker.aa_file.sh` | Script for quality checks on Braker output.                     |
+| ├── `pre_braker/`                  | Directory for pre-Braker setup files.                                       |
+| │   ├── `proteins/`                | Directory for protein sequence files.                                       |
+| │   │   └── `.gitkeep`             | Empty file to preserve the directory in Git.                                |
+| │   └── `.gitkeep`                 | Empty file to preserve the directory in Git.                                |
+| ├── `README.md`                    | Main documentation file for the pipeline.                                   |
+| └── `braker3sif.md`                | Documentation for the Braker3 Singularity container setup.                  |
 ## Prerequisites
 Before running the pipeline, ensure the following are installed and configured:
 
