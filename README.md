@@ -1,41 +1,87 @@
 # Braker3 Pipeline for Necator americanus Genome Annotation
-
 ## Overview
-This pipeline implements Braker3 for annotating the Necator americanus genome using RNA-Seq and protein data. The pipeline is containerized using Singularity to ensure reproducibility and ease of deployment.
+- This pipeline implements Braker3 for annotating the Necator americanus genome using RNA-Seq and protein data. The pipeline is containerized using Singularity to ensure reproducibility and ease of deployment. The directory structure is organized to streamline the annotation process, from data preparation to post-annotation analyses.
 
+## Directory Structure
+- The pipeline is organized into the following directories:
+
+
+braker_run/
+├── braker_directories/
+│   └── .gitkeep
+├── Download_Augustus.md
+├── Download_GeneMark.md
+├── Download_HISAT2_and_SRAtoolkit.md
+├── other_downloads_for_GeneMark.md
+├── genomes/
+│   └── .gitkeep
+├── post_braker/
+│   ├── blast_analysis/
+│   │   ├── .gitkeep
+│   │   └── run_blast.sh
+│   ├── busco_analysis/
+│   │   ├── .gitkeep
+│   │   └── run_busco.sh
+│   ├── interproscan_analysis/
+│   │   ├── .gitkeep
+│   │   └── run_interproscan.sh
+│   └── orthofinder_analysis/
+│       ├── .gitkeep
+│       └── quality_check_braker.aa_file.sh
+├── pre_braker/
+│   ├── proteins/
+│   │   └── .gitkeep
+│   └── .gitkeep
+├── README.md
+└── braker3sif.md
 ## Prerequisites
-- Singularity installed on your system
-- Input data:
+Before running the pipeline, ensure the following are installed and configured:
+
+Singularity: Required for running the Braker3 container.
+
+- Input Data:
+
   - Genome assembly (FASTA format)
+
   - RNA-Seq data (BAM format with XS tags)
-  - Protein sequences database
+
+  - Protein sequences database (FASTA format)
 
 ## Container Setup
+- Building the Singularity Container
+  - To build the Braker3 Singularity container, run:
 
-### Building the Singularity Container
 ```bash
 singularity build braker3.sif docker://teambraker/braker3:latest
 ```
 
 ## Input Data Requirements
+- RNA-Seq Alignment Requirements
+  - BAM files must contain XS (strand) tags for spliced reads.
 
-### RNA-Seq Alignment Requirements
-- BAM files must contain XS (strand) tags for spliced reads
-- For HISAT2 alignments: use `--dta` option
-- For STAR alignments: use `--outSAMstrandField intronMotif` option
-- TopHat alignments include required tags by default
+  - For HISAT2 alignments: Use the --dta option.
 
-### Required Files
-1. Genome assembly file (FASTA format)
-2. Protein sequence database (FASTA format)
-3. RNA-Seq data in one of the following formats:
-   - SRA accession IDs
-   - Unaligned reads (FASTQ format)
-   - Aligned reads (BAM format)
+  - For STAR alignments: Use the --outSAMstrandField intronMotif option.
+
+  - TopHat alignments include the required tags by default.
+
+- Required Files
+  - Genome assembly file (FASTA format)
+
+  - Protein sequence database (FASTA format)
+
+  - RNA-Seq data in one of the following formats:
+
+    - SRA accession IDs
+
+    - Unaligned reads (FASTQ format)
+
+    - Aligned reads (BAM format)
 
 ## Pipeline Execution
+- Basic Usage
+  - To run Braker3 with a genome, protein database, and RNA-Seq BAM files:
 
-### Basic Usage
 ```bash
 singularity exec braker3.sif braker.pl \
     --genome=necator_genome.fa \
@@ -43,8 +89,9 @@ singularity exec braker3.sif braker.pl \
     --bam=rnaseq1.bam,rnaseq2.bam \
     --species=necator_americanus
 ```
+- Alternative Usage with SRA Data
+  - To run Braker3 using SRA accession IDs:
 
-### Alternative Usage with SRA Data
 ```bash
 singularity exec braker3.sif braker.pl \
     --genome=necator_genome.fa \
@@ -52,53 +99,69 @@ singularity exec braker3.sif braker.pl \
     --rnaseq_sets_ids=SRR_ID1,SRR_ID2 \
     --species=necator_americanus
 ```
-
 ## Output Files
+Primary Output Files
+- braker.gtf: Final gene set combining AUGUSTUS and GeneMark-ETP predictions.
 
-### Primary Output Files
-1. `braker.gtf`: Final gene set combining AUGUSTUS and GeneMark-ETP predictions
-2. `braker.codingseq`: Coding sequences in FASTA format
-3. `braker.aa`: Protein sequences in FASTA format
-4. `braker.gff3`: Gene predictions in GFF3 format (if --gff3 flag used)
+- braker.codingseq: Coding sequences in FASTA format.
 
-### Additional Output Directories
-- `Augustus/`: Contains AUGUSTUS gene predictions
-- `GeneMark-E*/`: Contains GeneMark-ETP predictions
-- `braker_original/`: Original predictions before BUSCO completeness improvement
-- `bbc/`: BUSCO completeness improvement results
+- braker.aa: Protein sequences in FASTA format.
 
-## Output File Formats
+- braker.gff3: Gene predictions in GFF3 format (if --gff3 flag is used).
 
-### GTF Format Example
-```
-HS04636 AUGUSTUS initial   966 1017 . + 0 transcript_id "g1.1"; gene_id "g1";
-HS04636 AUGUSTUS internal 1818 1934 . + 2 transcript_id "g1.1"; gene_id "g1";
-```
+## Additional Output Directories
+- Augustus/: Contains AUGUSTUS gene predictions.
 
-Columns:
-1. seqname
-2. source
-3. feature
-4. start
-5. end
-6. score
-7. strand
-8. frame
-9. transcript ID and gene ID
+- GeneMark-E*/: Contains GeneMark-ETP predictions.
+
+- braker_original/: Original predictions before BUSCO completeness improvement.
+
+- bbc/: BUSCO completeness improvement results.
+
+## Post-Braker Analysis
+The post_braker/ directory contains scripts and directories for downstream analyses:
+
+Blast Analysis
+Script: run_blast.sh
+
+Purpose: Perform BLAST analysis on annotated protein sequences.
+
+BUSCO Analysis
+Script: run_busco.sh
+
+Purpose: Assess the completeness of the annotated genome using BUSCO.
+
+InterProScan Analysis
+Script: run_interproscan.sh
+
+Purpose: Annotate protein domains and functional sites.
+
+OrthoFinder Analysis
+Script: quality_check_braker.aa_file.sh
+
+Purpose: Perform orthology analysis and quality checks on annotated proteins.
 
 ## Visualization
-If using the `--makehub` option with MakeHub installed:
-1. A `hub_` directory will be created
-2. Copy this directory to a public web server
-3. Use the `hub.txt` file link with UCSC Genome Browser for visualization
+If using the --makehub option with MakeHub installed:
+
+A hub_/ directory will be created.
+
+Copy this directory to a public web server.
+
+Use the hub.txt file link with the UCSC Genome Browser for visualization.
 
 ## Troubleshooting
-- Ensure BAM files contain proper XS tags
-- Verify all input files are in correct formats
-- Check write permissions for AUGUSTUS config directory
-- Monitor log files in working directory for error messages
+Ensure BAM files contain proper XS tags.
+
+Verify all input files are in the correct formats.
+
+Check write permissions for the AUGUSTUS config directory.
+
+Monitor log files in the working directory for error messages.
 
 ## References
-- BRAKER3 Documentation: [Docker Hub](https://hub.docker.com/r/teambraker/braker3)
-- GeneMark-ETP: [GitHub](http://github.com/gatech-genemark/GeneMark-ETP)
-- AUGUSTUS: [GitHub](https://github.com/Gaius-Augustus/Augustus)
+BRAKER3 Documentation: Docker Hub
+
+GeneMark-ETP: GitHub
+
+AUGUSTUS: GitHub
