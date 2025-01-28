@@ -1,9 +1,9 @@
 # Braker3 Pipeline for Necator americanus Genome Annotation
 ## Overview
-- This pipeline implements Braker3 for annotating the Necator americanus genome using RNA-Seq and protein data. The pipeline is containerized using Singularity to ensure reproducibility and ease of deployment. The directory structure is organized to streamline the annotation process, from data preparation to post-annotation analyses.
+This pipeline implements Braker3 for annotating the Necator americanus genome using RNA-Seq and protein data. The pipeline is containerized using Singularity to ensure reproducibility and ease of deployment. The directory structure is organized to streamline the annotation process, from data preparation to post-annotation analyses.
 
 ## Directory Structure
-- The pipeline is organized into the following directories:
+The pipeline is organized into the following directories:
 
 braker_run/
 ├── braker_directories/
@@ -37,7 +37,7 @@ braker_run/
 ## Prerequisites
 Before running the pipeline, ensure the following are installed and configured:
 
-Singularity: Required for running the Braker3 container.
+- Singularity: Required for running the Braker3 container.
 
 - Input Data:
 
