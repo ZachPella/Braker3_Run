@@ -1,53 +1,59 @@
-"""
-A script for preparing and running RepeatMasker on a genome FASTA file.
+# RepeatMasker Pipeline for Genome Annotation
 
-This script:
-1. Loads necessary modules for the environment.
-2. Sets the PATH variable to include the local RepeatMasker installation.
-3. Trims the headers of a given genome FASTA file to ensure compatibility.
-4. Runs RepeatMasker on the processed FASTA file.
+-This document outlines the steps to run RepeatMasker on a genome assembly with trimmed FASTA headers. The pipeline includes loading necessary modules, setting up the environment, trimming FASTA headers, and executing RepeatMasker.
 
-Environment Setup:
-- `module load` commands are used to ensure required compilers and tools are available.
-- The PATH is updated to include the RepeatMasker installation.
+## Prerequisites
 
-Steps:
-1. Trims FASTA headers to a maximum of 30 characters.
-2. Executes RepeatMasker on the trimmed genome FASTA file.
+-Ensure the following m0dules are available on your system:
 
-Example:
-    $ module load compiler/gcc/11
-    $ module load openmpi/4.1
-    $ module load hmmer/3.3
-    $ module load trf
-    $ export PATH=/work/fauverlab/zachpella/RepeatMasker:$PATH
-    $ cd /work/fauverlab/zachpella
-    $ awk '/^>/ {
-           original_id = substr($0, 2);
-           new_id = substr(original_id, 1, 30);
-           $0 = ">" new_id;
-       } 1' MaSuRCA_config_purged_namericanus_withMito.fasta > trimmed_header_genome.fasta
-    $ ./RepeatMasker/RepeatMasker trimmed_header_genome.fasta
+- `compiler/gcc/11`
+- `openmpi/4.1`
+- `hmmer/3.3`
+- `trf`
 
-Functions:
----------
-1. **Environment Setup**:
-    - Load necessary tools (GCC, OpenMPI, HMMER, TRF).
-    - Update PATH for RepeatMasker.
+## Step 1: Load Required Modules
 
-2. **Header Trimming**:
-    - Trims FASTA headers to ensure compliance with tools that limit header lengths.
+-Load the necessary modules using the following commands:
 
-3. **RepeatMasker Execution**:
-    - Runs RepeatMasker with the trimmed genome FASTA file.
+```bash
+module load compiler/gcc/11
+module load openmpi/4.1
+module load hmmer/3.3
+module load trf
+```
 
-Returns:
--------
-- `trimmed_header_genome.fasta`: The processed genome FASTA file with trimmed headers.
-- RepeatMasker output files (e.g., `.out`, `.tbl`, `.masked`).
+## Step 2: Set Up Environment
+-Set the path to your local RepeatMasker installation:
 
-Notes:
------
-- Ensure RepeatMasker is correctly installed in `/work/fauverlab/zachpella/RepeatMasker`.
-- The input FASTA file should be in the same directory.
-"""
+'''bash
+export PATH=/work/fauverlab/zachpella/RepeatMasker:$PATH
+'''
+## Navigate to the working directory:
+
+'''bash
+cd /work/fauverlab/zachpella '''
+
+## Step 3: Trim FASTA Headers
+-Trim the FASTA headers to a maximum of 30 characters using awk:
+
+'''bash
+awk '/^>/ {
+   original_id = substr($0, 2);
+   new_id = substr(original_id, 1, 30);
+   $0 = ">" new_id;
+} 1' input_genome.fasta > braker_ready_genome.fasta'''
+
+## This command processes the input FASTA file MaSuRCA_config_purged_namericanus_withMito.fasta and outputs a new file trimmed_header_genome.fasta with trimmed headers.
+
+## Step 4: Run RepeatMasker
+-Execute RepeatMasker on the trimmed genome FASTA file:
+
+'''bash
+./RepeatMasker/RepeatMasker braker_ready_genome.fasta'''
+
+## This command runs RepeatMasker with the default configuration on the trimmed_header_genome.fasta file.
+
+## Conclusion
+-This pipeline automates the process of trimming FASTA headers and running RepeatMasker for genome annotation. Ensure all dependencies are correctly installed and paths are properly set before executing the script.
+
+-For any issues or further customization, refer to the RepeatMasker documentation or contact your system administrator.
