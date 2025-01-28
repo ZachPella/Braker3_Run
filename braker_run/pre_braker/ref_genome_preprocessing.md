@@ -26,8 +26,8 @@ module load trf
 -Set the path to your local RepeatMasker installation:
 
 '''bash
-export PATH=/work/fauverlab/zachpella/RepeatMasker:$PATH
-'''
+export PATH=/work/fauverlab/zachpella/RepeatMasker:$PATH'''
+
 ## Navigate to the working directory:
 
 '''bash
