@@ -11,7 +11,7 @@ def load_module_biopython():
 
     Notes
     -----
-    - The FASTA file is assumed to be named `braker.aa` and located in the current working directory.
+    - The FASTA file is assumed to be named `braker.aa` and located in `braker_run/proteins`.
     - Expected minimum and maximum sequence lengths are defined as `EXPECTED_MIN_LENGTH` and `EXPECTED_MAX_LENGTH`.
     - Invalid amino acid characters are defined as any character not in the set `ARNDCQEGHILKMFPSTWYV\*`.
 
@@ -57,7 +57,7 @@ def load_module_biopython():
         if (seq != "") {
             print header "\tLength: " length(seq)
         }
-    }' braker.aa | head -n 10
+    }' braker_run/proteins/braker.aa | head -n 10
 
     # Python script to compute sequence length statistics
     echo -e "\n===== Getting length statistics differently ====="
@@ -70,7 +70,7 @@ def load_module_biopython():
     EXPECTED_MAX_LENGTH = 3000
 
     lengths = []
-    with open('braker.aa', 'r') as handle:
+    with open('braker_run/proteins/braker.aa', 'r') as handle:
         for record in SeqIO.parse(handle, 'fasta'):
             lengths.append(len(record.seq))
 
@@ -99,10 +99,10 @@ def load_module_biopython():
 
     # Shell commands to check file integrity
     echo -e "\n===== Checking file integrity ====="
-    echo "File size: $(ls -lh braker.aa | awk '{print $5}')"
-    echo "Number of headers: $(grep -c '^>' braker.aa)"
-    echo "Number of sequence lines: $(grep -c -v '^>' braker.aa)"
+    echo "File size: $(ls -lh braker_run/proteins/braker.aa | awk '{print $5}')"
+    echo "Number of headers: $(grep -c '^>' braker_run/proteins/braker.aa)"
+    echo "Number of sequence lines: $(grep -c -v '^>' braker_run/proteins/braker.aa)"
 
     # Shell commands to check for invalid amino acid characters
     echo -e "\n===== Checking for invalid amino acid characters ====="
-    grep -v '^>' braker.aa | grep -P '[^ARNDCQEGHILKMFPSTWYV\*]' | head -n 5
+    grep -v '^>' braker_run/proteins/braker.aa | grep -P '[^ARNDCQEGHILKMFPSTWYV\*]' | head -n 5
