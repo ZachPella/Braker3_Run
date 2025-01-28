@@ -35,11 +35,14 @@ def run_blast_analysis():
     # Load necessary modules
     module load blast
 
+    # Define the path to the proteins directory
+    PROTEINS_DIR="/braker_run/proteins"
+
     # Create BLAST database
-    makeblastdb -in c_elegans_proteins.fasta -dbtype prot -out C_elegans_proteome_db
+    makeblastdb -in $PROTEINS_DIR/c_elegans_proteins.fasta -dbtype prot -out $PROTEINS_DIR/C_elegans_proteome_db
 
     # Run BLASTP
-    blastp -query braker.aa -db C_elegans_proteome_db -out blastp_results.txt -evalue 1e-10 -outfmt 6
+    blastp -query $PROTEINS_DIR/braker.aa -db $PROTEINS_DIR/C_elegans_proteome_db -out $PROTEINS_DIR/blastp_results.txt -evalue 1e-10 -outfmt 6
 
     # Run BLASTX
-    blastx -query braker.codingseq -db C_elegans_proteome_db -out blastx_results.txt -evalue 1e-10 -outfmt 6
+    blastx -query $PROTEINS_DIR/braker.codingseq -db $PROTEINS_DIR/C_elegans_proteome_db -out $PROTEINS_DIR/blastx_results.txt -evalue 1e-10 -outfmt 6
