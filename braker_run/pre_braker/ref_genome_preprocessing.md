@@ -26,13 +26,13 @@ module load trf
 -Set the path to your local RepeatMasker installation:
 
 ```bash
-export PATH=/work/RepeatMasker:$PATH'''
+export PATH=/work/braker_run/braker_directories/RepeatMasker:$PATH'''
 ```
 
 ## Navigate to the working directory:
 
 ```bash
-cd /work
+cd /work/braker_run
 ```
 
 ## Step 3: Trim FASTA Headers
