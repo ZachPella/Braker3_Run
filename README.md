@@ -5,7 +5,6 @@
 ## Directory Structure
 - The pipeline is organized into the following directories:
 
-
 braker_run/
 ├── braker_directories/
 │   └── .gitkeep
@@ -34,6 +33,7 @@ braker_run/
 │   └── .gitkeep
 ├── README.md
 └── braker3sif.md
+
 ## Prerequisites
 Before running the pipeline, ensure the following are installed and configured:
 
