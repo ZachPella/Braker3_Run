@@ -1,4 +1,4 @@
-# Braker3 Pipeline for Necator americanus Genome Annotation
+# Braker3 Pipeline for Necator americanus Genome Annotation and Functional Annotation
 ## Overview
 This pipeline implements Braker3 for annotating the Necator americanus genome using RNA-Seq and protein data. The pipeline is containerized using Singularity to ensure reproducibility and ease of deployment. The directory structure is organized to streamline the annotation process, from data preparation to post-annotation analyses.
 
