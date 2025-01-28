@@ -67,8 +67,7 @@ cp -r /usr/bin/Augustus/config/ /home/yours/
 export AUGUSTUS_CONFIG_PATH=/home/yours/augustus_config
 export AUGUSTUS_BIN_PATH=/usr/bin
 export AUGUSTUS_SCRIPTS_PATH=/usr/bin/augustus_scripts
-'''
-
+```
 ## Modifying $PATH
 - Current Bash Session
 
@@ -76,5 +75,6 @@ export AUGUSTUS_SCRIPTS_PATH=/usr/bin/augustus_scripts
 PATH=/your_path_to_augustus/bin/:/your_path_to_augustus/scripts/:$PATH
 export PATH
 ```
+
 -All Bash Sessions
 Add the above lines to a startup script like ~/.bashrc.
