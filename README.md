@@ -5,6 +5,8 @@ This pipeline implements Braker3 for annotating the Necator americanus genome us
 ## Directory Structure
 The pipeline is organized into the following directories:
 
+# Directory Structure and File Descriptions
+```
 | Directory/File                     | Description                                                                 |
 |------------------------------------|-----------------------------------------------------------------------------|
 | `braker_run/`                      | Root directory for the Braker3 pipeline.                                    |
@@ -27,6 +29,7 @@ The pipeline is organized into the following directories:
 | │   ├── `proteins/`                | Directory for protein sequence files.                                       |
 | ├── `README.md`                    | Main documentation file for the pipeline.                                   |
 | └── `braker3sif.md`                | Documentation for the Braker3 Singularity container setup.                  |
+```
 ## Prerequisites
 Before running the pipeline, ensure the following are installed and configured:
 
