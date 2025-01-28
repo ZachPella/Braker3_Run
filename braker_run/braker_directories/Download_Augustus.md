@@ -67,7 +67,7 @@ cp -r /usr/bin/Augustus/config/ /home/yours/
 export AUGUSTUS_CONFIG_PATH=/home/yours/augustus_config
 export AUGUSTUS_BIN_PATH=/usr/bin
 export AUGUSTUS_SCRIPTS_PATH=/usr/bin/augustus_scripts
-```
+'''
 
 ## Modifying $PATH
 - Current Bash Session
