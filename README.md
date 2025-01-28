@@ -25,7 +25,6 @@ The pipeline is organized into the following directories:
 | │       └── `quality_check_braker.aa_file.sh` | Script for quality checks on Braker output.                     |
 | ├── `pre_braker/`                  | Directory for pre-Braker setup files.                                       |
 | │   ├── `proteins/`                | Directory for protein sequence files.                                       |
-| │   └── `.gitkeep`                 | Empty file to preserve the directory in Git.                                |
 | ├── `README.md`                    | Main documentation file for the pipeline.                                   |
 | └── `braker3sif.md`                | Documentation for the Braker3 Singularity container setup.                  |
 ## Prerequisites
