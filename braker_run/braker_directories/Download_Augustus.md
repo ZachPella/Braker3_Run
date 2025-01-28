@@ -62,12 +62,14 @@ export AUGUSTUS_CONFIG_PATH=/your_path_to_AUGUSTUS/Augustus/config/
 -Separate Binary and Config: Recursively copy the unwritable config contents to a writable location.
 
 -Example Commands
-'''bash
+
+```bash
 cp -r /usr/bin/Augustus/config/ /home/yours/
 export AUGUSTUS_CONFIG_PATH=/home/yours/augustus_config
 export AUGUSTUS_BIN_PATH=/usr/bin
 export AUGUSTUS_SCRIPTS_PATH=/usr/bin/augustus_scripts
 ```
+
 ## Modifying $PATH
 - Current Bash Session
 
