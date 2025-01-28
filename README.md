@@ -48,39 +48,38 @@ Before running the pipeline, ensure the following are installed and configured:
   - Protein sequences database (FASTA format)
 
 ## Container Setup
-- Building the Singularity Container
-  - To build the Braker3 Singularity container, run:
+### Building the Singularity Container
+- To build the Braker3 Singularity container, run:
 
 ```bash
 singularity build braker3.sif docker://teambraker/braker3:latest
 ```
 
 ## Input Data Requirements
-- RNA-Seq Alignment Requirements
-  - BAM files must contain XS (strand) tags for spliced reads.
+### RNA-Seq Alignment Requirements
+- BAM files must contain XS (strand) tags for spliced reads.
 
-  - For HISAT2 alignments: Use the --dta option.
+- For HISAT2 alignments: Use the --dta option.
 
-  - For STAR alignments: Use the --outSAMstrandField intronMotif option.
+- For STAR alignments: Use the --outSAMstrandField intronMotif option.
 
-  - TopHat alignments include the required tags by default.
+- TopHat alignments include the required tags by default.
+### Required Files
+- Genome assembly file (FASTA format)
 
-- Required Files
-  - Genome assembly file (FASTA format)
+- Protein sequence database (FASTA format)
 
-  - Protein sequence database (FASTA format)
+- RNA-Seq data in one of the following formats:
 
-  - RNA-Seq data in one of the following formats:
+ - SRA accession IDs
 
-    - SRA accession IDs
+ - Unaligned reads (FASTQ format)
 
-    - Unaligned reads (FASTQ format)
-
-    - Aligned reads (BAM format)
+ - Aligned reads (BAM format)
 
 ## Pipeline Execution
-- Basic Usage
-  - To run Braker3 with a genome, protein database, and RNA-Seq BAM files:
+### Basic Usage
+- To run Braker3 with a genome, protein database, and RNA-Seq BAM files:
 
 ```bash
 singularity exec braker3.sif braker.pl \
@@ -89,8 +88,8 @@ singularity exec braker3.sif braker.pl \
     --bam=rnaseq1.bam,rnaseq2.bam \
     --species=necator_americanus
 ```
-- Alternative Usage with SRA Data
-  - To run Braker3 using SRA accession IDs:
+## Alternative Usage with SRA Data
+- To run Braker3 using SRA accession IDs:
 
 ```bash
 singularity exec braker3.sif braker.pl \
@@ -100,7 +99,7 @@ singularity exec braker3.sif braker.pl \
     --species=necator_americanus
 ```
 ## Output Files
-Primary Output Files
+### Primary Output Files
 - braker.gtf: Final gene set combining AUGUSTUS and GeneMark-ETP predictions.
 
 - braker.codingseq: Coding sequences in FASTA format.
@@ -109,7 +108,7 @@ Primary Output Files
 
 - braker.gff3: Gene predictions in GFF3 format (if --gff3 flag is used).
 
-## Additional Output Directories
+### Additional Output Directories
 - Augustus/: Contains AUGUSTUS gene predictions.
 
 - GeneMark-E*/: Contains GeneMark-ETP predictions.
@@ -121,47 +120,47 @@ Primary Output Files
 ## Post-Braker Analysis
 The post_braker/ directory contains scripts and directories for downstream analyses:
 
-Blast Analysis
-Script: run_blast.sh
+### Blast Analysis
+- Script: run_blast.sh
 
-Purpose: Perform BLAST analysis on annotated protein sequences.
+- Purpose: Perform BLAST analysis on annotated protein sequences.
 
-BUSCO Analysis
-Script: run_busco.sh
+### BUSCO Analysis
+- Script: run_busco.sh
 
-Purpose: Assess the completeness of the annotated genome using BUSCO.
+- Purpose: Assess the completeness of the annotated genome using BUSCO.
 
-InterProScan Analysis
-Script: run_interproscan.sh
+### InterProScan Analysis
+- Script: run_interproscan.sh
 
-Purpose: Annotate protein domains and functional sites.
+- Purpose: Annotate protein domains and functional sites.
 
-OrthoFinder Analysis
-Script: quality_check_braker.aa_file.sh
+### OrthoFinder Analysis
+- Script: quality_check_braker.aa_file.sh
 
-Purpose: Perform orthology analysis and quality checks on annotated proteins.
+- Purpose: Perform orthology analysis and quality checks on annotated proteins.
 
 ## Visualization
 If using the --makehub option with MakeHub installed:
 
-A hub_/ directory will be created.
+- A hub_/ directory will be created.
 
-Copy this directory to a public web server.
+- Copy this directory to a public web server.
 
-Use the hub.txt file link with the UCSC Genome Browser for visualization.
+- Use the hub.txt file link with the UCSC Genome Browser for visualization.
 
 ## Troubleshooting
-Ensure BAM files contain proper XS tags.
+- Ensure BAM files contain proper XS tags.
 
-Verify all input files are in the correct formats.
+- Verify all input files are in the correct formats.
 
-Check write permissions for the AUGUSTUS config directory.
+- Check write permissions for the AUGUSTUS config directory.
 
-Monitor log files in the working directory for error messages.
+- Monitor log files in the working directory for error messages.
 
 ## References
-BRAKER3 Documentation: Docker Hub
+- BRAKER3 Documentation: Docker Hub
 
-GeneMark-ETP: GitHub
+- GeneMark-ETP: GitHub
 
-AUGUSTUS: GitHub
+- AUGUSTUS: GitHub
