@@ -1,11 +1,11 @@
 # BRAKER3 Singularity Container Setup
--This guide explains how to build and run the BRAKER3 tool using a Singularity container.
+- This guide explains how to build and run the BRAKER3 tool using a Singularity container.
 
 ## Step 1: Install Singularity
--Ensure Singularity is installed on your system. If not, follow the official installation guide: Singularity Installation.
+- Ensure Singularity is installed on your system. If not, follow the official installation guide: Singularity Installation.
 
 ## Step 2: Build the Singularity Image (.sif file)
--To build the Singularity image from the Docker container teambraker/braker3:latest, run the following command:
+- To build the Singularity image from the Docker container teambraker/braker3:latest, run the following command:
 
 ```bash
 singularity build braker3.sif docker://teambraker/braker3:latest
