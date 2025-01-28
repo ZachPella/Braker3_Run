@@ -47,5 +47,5 @@ singularity exec braker3.sif braker.pl --genome=genome.fa --bam=alignment.bam --
 ## Notes
 - Ensure you have the necessary input files (e.g., genome FASTA, BAM files) in your working directory or provide the correct paths.
 
-## For more details on BRAKER3 parameters, refer to the BRAKER3 documentation.
+- For more details on BRAKER3 parameters, refer to the BRAKER3 documentation.
 
