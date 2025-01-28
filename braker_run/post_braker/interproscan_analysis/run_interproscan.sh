@@ -34,9 +34,9 @@ def run_interproscan_analysis():
     """
     
     # Set up the input and output directories
-    INPUT_DIR="/braker_run/ref_proteins"
+    INPUT_DIR="/braker_run/proteins"
     OUTPUT_DIR="/braker_run/post_braker/interproscan_analysis"
-    INPUT_FILE="braker.aa"
+    INPUT_FILE="/braker_run/proteins/braker.aa"
     OUTPUT_FILE="interproscan_results.tsv"
 
     # Load the InterProScan module (if applicable)
