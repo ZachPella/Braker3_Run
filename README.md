@@ -1,162 +1,120 @@
-# Braker3 Pipeline for Necator americanus Genome Annotation and Functional Annotation
-## Overview
-This pipeline implements Braker3 for annotating the Necator americanus genome using RNA-Seq and protein data. The pipeline is containerized using Singularity to ensure reproducibility and ease of deployment. The directory structure is organized to streamline the annotation process, from data preparation to post-annotation analyses.
+**🦠 Braker3 Genome Adventure: Annotate a Hookworm Genome! 🧬**  
 
-## Directory Structure
-The pipeline is organized into the following directories:
+Hi there! This guide will help you use Braker3 (a cool detective tool 🕵️) to find genes in a hookworm’s DNA. Think of it like solving a puzzle where Braker3 is your detective friend!  
 
-# Directory Structure and File Descriptions
-```
-| Directory/File                     | Description                                                                 |
-|------------------------------------|-----------------------------------------------------------------------------|
-| `braker_run/`                      | Root directory for the Braker3 pipeline.                                    |
-| ├── `braker_directories/`          | Directory for Braker3 intermediate files and setup instructions.            |
-| │   ├── `Download_Augustus.md`     | Instructions for downloading AUGUSTUS.                                      |
-| │   ├── `Download_GeneMark.md`     | Instructions for downloading GeneMark.                                      |
-| │   ├── `Download_HISAT2_and_SRAtoolkit.md` | Instructions for downloading HISAT2 and SRA toolkit.               |
-| │   └── `other_downloads_for_GeneMark.md` | Additional instructions for GeneMark setup.                          |
-| ├── `genomes/`                     | Directory for genome files.                                                 |
-| ├── `post_braker/`                 | Directory for post-Braker analysis scripts.                                 |
-| │   ├── `blast_analysis/`          | Directory for BLAST analysis scripts.                                       |
-| │   │   └── `run_blast.sh`         | Script to run BLAST analysis.                                               |
-| │   ├── `busco_analysis/`          | Directory for BUSCO analysis scripts.                                       |
-| │   │   └── `run_busco.sh`         | Script to run BUSCO analysis.                                               |
-| │   ├── `interproscan_analysis/`   | Directory for InterProScan analysis scripts.                                |
-| │   │   └── `run_interproscan.sh`  | Script to run InterProScan analysis.                                        |
-| │   └── `orthofinder_analysis/`    | Directory for OrthoFinder analysis scripts.                                 |
-| │       └── `quality_check_braker.aa_file.sh` | Script for quality checks on Braker output.                      |
-| ├── `pre_braker/`                  | Directory for pre-Braker setup files.                                       |
-| │   ├── `proteins/`                | Directory for protein sequence files.                                       |
-| ├── `README.md`                    | Main documentation file for the pipeline.                                   |
-| └── `braker3sif.md`                | Documentation for the Braker3 Singularity container setup.                  |
-```
-## Prerequisites
-Before running the pipeline, ensure the following are installed and configured:
+---
 
-- Singularity: Required for running the Braker3 container.
+### **📦 What You Need**  
+1. **Your Tools**:  
+   - **A Magic Box (Singularity)**: This keeps all your tools organized. You need to install it!  
+   - **Computer Power**: A laptop or big computer (like a scientist’s!).  
 
-- Input Data:
+2. **Inputs (Your Clues)**:  
+   - **Hookworm DNA Map** (`necator_genome.fa`): A file with the hookworm’s DNA code.  
+   - **Protein Clues** (`protein_db.fa`): A file of known proteins (like puzzle pieces!).  
+   - **RNA Clues**: Either:  
+     - **BAM Files** (like `rnaseq1.bam`): These show how the DNA is read by the worm’s cells.  
+     - **SRA IDs** (like `SRR_ID1`): Secret codes to download RNA data from the internet!  
 
-  - Genome assembly (FASTA format)
+---
 
-  - RNA-Seq data (BAM format with XS tags)
+### **🚀 Step-by-Step Instructions**  
 
-  - Protein sequences database (FASTA format)
+#### **Step 1: Set Up Your Magic Box (Singularity)**  
+**Goal**: Get Braker3 ready in a magic box!  
+```bash  
+singularity build braker3.sif docker://teambraker/braker3:latest  
+```  
+*What happens?*: This downloads Braker3 into a "magic box" called `braker3.sif`!  
 
-## Container Setup
-### Building the Singularity Container
-- To build the Braker3 Singularity container, run:
+---
 
-```bash
-singularity build braker3.sif docker://teambraker/braker3:latest
-```
+#### **Step 2: Start the Detective Work!**  
+**Goal**: Find genes in the hookworm’s DNA using Braker3.  
 
-## Input Data Requirements
-### RNA-Seq Alignment Requirements
-- BAM files must contain XS (strand) tags for spliced reads.
+**If you have BAM files (RNA clues)**:  
+```bash  
+singularity exec braker3.sif braker.pl \  
+    --genome=necator_genome.fa \  
+    --prot_seq=protein_db.fa \  
+    --bam=rnaseq1.bam,rnaseq2.bam \  
+    --species=necator_americanus  
+```  
 
-- For HISAT2 alignments: Use the --dta option.
+**If you have SRA IDs (secret codes)**:  
+```bash  
+singularity exec braker3.sif braker.pl \  
+    --genome=necator_genome.fa \  
+    --prot_seq=protein_db.fa \  
+    --rnaseq_sets_ids=SRR_ID1,SRR_ID2 \  
+    --species=necator_americanus  
+```  
 
-- For STAR alignments: Use the --outSAMstrandField intronMotif option.
+*What happens?*: Braker3 combines the DNA map, protein clues, and RNA clues to guess where the genes are!  
 
-- TopHat alignments include the required tags by default.
-### Required Files
-- Genome assembly file (FASTA format)
+---
 
-- Protein sequence database (FASTA format)
+### **📂 What’s Inside This Project?**  
+**Folders and Files**:  
+```  
+braker_run/  
+├── braker_directories/          📚 Recipe books for setting up tools!  
+│   ├── Download_Augustus.md     (How to get AUGUSTUS, a gene-finder)  
+│   ├── Download_GeneMark.md     (How to get GeneMark, another gene-finder)  
+├── genomes/                     🧬 Home for your hookworm DNA map!  
+├── post_braker/                 🔍 More detective work after Braker3 finishes!  
+│   ├── blast_analysis/          🔎 BLAST: Tag genes with names!  
+│   ├── busco_analysis/          ✔️ BUSCO: Check if genes are complete!  
+│   ├── interproscan_analysis/   🧩 InterProScan: Find out what genes DO!  
+│   └── orthofinder_analysis/    🌍 OrthoFinder: See which genes are in other species!  
+```  
 
-- RNA-Seq data in one of the following formats:
+---
 
- - SRA accession IDs
+### **🎁 What You’ll Get (Outputs!)**  
+1. **Gene Map** (`braker.gtf`): A list of all the genes Braker3 found!  
+2. **Protein Recipes** (`braker.aa`): Recipes for proteins the genes make!  
+3. **Gene Pictures** (`pca_results.pdf`): Rainbow-colored graphs showing gene groups!  
 
- - Unaligned reads (FASTQ format)
+---
 
- - Aligned reads (BAM format)
+### **🔍 After Braker3: More Fun!**  
+Run these scripts in the `post_braker/` folder:  
 
-## Pipeline Execution
-### Basic Usage
-- To run Braker3 with a genome, protein database, and RNA-Seq BAM files:
+1. **BLAST Adventure**:  
+   ```bash  
+   ./run_blast.sh  
+   ```  
+   *What happens?*: BLAST gives funny names to your genes (like "Super Oxygen Maker!").  
 
-```bash
-singularity exec braker3.sif braker.pl \
-    --genome=necator_genome.fa \
-    --prot_seq=protein_db.fa \
-    --bam=rnaseq1.bam,rnaseq2.bam \
-    --species=necator_americanus
-```
-## Alternative Usage with SRA Data
-- To run Braker3 using SRA accession IDs:
+2. **BUSCO Check**:  
+   ```bash  
+   ./run_busco.sh  
+   ```  
+   *What happens?*: BUSCO makes a report card to see if you found all the genes!  
 
-```bash
-singularity exec braker3.sif braker.pl \
-    --genome=necator_genome.fa \
-    --prot_seq=protein_db.fa \
-    --rnaseq_sets_ids=SRR_ID1,SRR_ID2 \
-    --species=necator_americanus
-```
-## Output Files
-### Primary Output Files
-- braker.gtf: Final gene set combining AUGUSTUS and GeneMark-ETP predictions.
+3. **InterProScan Quest**:  
+   ```bash  
+   ./run_interproscan.sh  
+   ```  
+   *What happens?*: Learn what your genes DO (like "this gene helps the worm breathe!").  
 
-- braker.codingseq: Coding sequences in FASTA format.
+---
 
-- braker.aa: Protein sequences in FASTA format.
+### **⚠️ Troubleshooting Tips**  
+- **BAM files need XS tags**: Tell your RNA aligner to add these (use `--dta` for HISAT2 or `--outSAMstrandField` for STAR).  
+- **Permission errors**: Ask a grown-up to check if you can write to the AUGUSTUS folder.  
+- **Log files**: If Braker3 is stuck, check the `braker.log` file for clues!  
 
-- braker.gff3: Gene predictions in GFF3 format (if --gff3 flag is used).
+---
 
-### Additional Output Directories
-- Augustus/: Contains AUGUSTUS gene predictions.
+### **🌟 Credits**  
+- **Braker3 Team**: [Docker Hub](https://hub.docker.com/r/teambraker/braker3)  
+- **GeneMark-ETP**: [GitHub](https://github.com/Gaius-Augustus/GeneMark-ETP)  
+- **AUGUSTUS**: [GitHub](https://github.com/Gaius-Augustus/AUGUSTUS)  
 
-- GeneMark-E*/: Contains GeneMark-ETP predictions.
+---
 
-- braker_original/: Original predictions before BUSCO completeness improvement.
+**You did it!** Now you’re a genome detective! 🎉 Share your gene maps and protein recipes with the world!  
 
-- bbc/: BUSCO completeness improvement results.
-
-## Post-Braker Analysis
-The post_braker/ directory contains scripts and directories for downstream analyses:
-
-### Blast Analysis
-- Script: run_blast.sh
-
-- Purpose: Perform BLAST analysis on annotated protein sequences.
-
-### BUSCO Analysis
-- Script: run_busco.sh
-
-- Purpose: Assess the completeness of the annotated genome using BUSCO.
-
-### InterProScan Analysis
-- Script: run_interproscan.sh
-
-- Purpose: Annotate protein domains and functional sites.
-
-### OrthoFinder Analysis
-- Script: quality_check_braker.aa_file.sh
-
-- Purpose: Perform orthology analysis and quality checks on annotated proteins.
-
-## Visualization
-If using the --makehub option with MakeHub installed:
-
-- A hub_/ directory will be created.
-
-- Copy this directory to a public web server.
-
-- Use the hub.txt file link with the UCSC Genome Browser for visualization.
-
-## Troubleshooting
-- Ensure BAM files contain proper XS tags.
-
-- Verify all input files are in the correct formats.
-
-- Check write permissions for the AUGUSTUS config directory.
-
-- Monitor log files in the working directory for error messages.
-
-## References
-- BRAKER3 Documentation: Docker Hub
-
-- GeneMark-ETP: GitHub
-
-- AUGUSTUS: GitHub
+*Note: Grown-ups might need to help install Singularity or fix permissions!* 😊
