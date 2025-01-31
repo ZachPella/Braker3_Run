@@ -1,38 +1,38 @@
 **🦠 Braker3 Genome Adventure: Annotate a Hookworm Genome! 🧬**  
 
-Hi there! This guide will help you use Braker3 (a cool detective tool 🕵️) to find genes in a hookworm’s DNA. Think of it like solving a puzzle where Braker3 is your detective friend!  
+Hi there! This guide will help you use Braker3—a powerful tool for finding genes in DNA—to annotate a hookworm genome. No advanced bioinformatics knowledge is required!  
 
 ---
 
-### **📦 What You Need**  
-1. **Your Tools**:  
-   - **A Magic Box (Singularity)**: This keeps all your tools organized. You need to install it!  
-   - **Computer Power**: A laptop or big computer (like a scientist’s!).  
+### **📦 What You’ll Need**  
+1. **Tools to Install**:  
+   - **Singularity**: A container platform to keep your tools organized. Install it from [Singularity Installation Guide](https://sylabs.io/guides/3.0/user-guide/installation.html).  
+   - **Computer**: A laptop or server with enough memory and processing power.  
 
-2. **Inputs (Your Clues)**:  
-   - **Hookworm DNA Map** (`necator_genome.fa`): A file with the hookworm’s DNA code.  
-   - **Protein Clues** (`protein_db.fa`): A file of known proteins (like puzzle pieces!).  
-   - **RNA Clues**: Either:  
-     - **BAM Files** (like `rnaseq1.bam`): These show how the DNA is read by the worm’s cells.  
-     - **SRA IDs** (like `SRR_ID1`): Secret codes to download RNA data from the internet!  
+2. **Input Files**:  
+   - **Hookworm Genome** (`necator_genome.fa`): A file containing the hookworm’s DNA sequence.  
+   - **Protein Database** (`protein_db.fa`): A file of known protein sequences for comparison.  
+   - **RNA Data**: Either:  
+     - **BAM Files** (e.g., `rnaseq1.bam`): Aligned RNA sequencing data.  
+     - **SRA IDs** (e.g., `SRR_ID1`): Accession codes to download RNA data from public databases.  
 
 ---
 
-### **🚀 Step-by-Step Instructions**  
+### **🚀 Step-by-Step Guide**  
 
-#### **Step 1: Set Up Your Magic Box (Singularity)**  
-**Goal**: Get Braker3 ready in a magic box!  
+#### **Step 1: Set Up Braker3 with Singularity**  
+**Goal**: Install Braker3 in a Singularity container.  
 ```bash  
 singularity build braker3.sif docker://teambraker/braker3:latest  
 ```  
-*What happens?*: This downloads Braker3 into a "magic box" called `braker3.sif`!  
+*What Happens*: This creates a Singularity image (`braker3.sif`) containing Braker3 and its dependencies.  
 
 ---
 
-#### **Step 2: Start the Detective Work!**  
-**Goal**: Find genes in the hookworm’s DNA using Braker3.  
+#### **Step 2: Run Braker3 to Annotate the Genome**  
+**Goal**: Identify genes in the hookworm genome using Braker3.  
 
-**If you have BAM files (RNA clues)**:  
+**If you have BAM files (RNA data)**:  
 ```bash  
 singularity exec braker3.sif braker.pl \  
     --genome=necator_genome.fa \  
@@ -41,7 +41,7 @@ singularity exec braker3.sif braker.pl \
     --species=necator_americanus  
 ```  
 
-**If you have SRA IDs (secret codes)**:  
+**If you have SRA IDs (to download RNA data)**:  
 ```bash  
 singularity exec braker3.sif braker.pl \  
     --genome=necator_genome.fa \  
@@ -50,61 +50,60 @@ singularity exec braker3.sif braker.pl \
     --species=necator_americanus  
 ```  
 
-*What happens?*: Braker3 combines the DNA map, protein clues, and RNA clues to guess where the genes are!  
+*What Happens*: Braker3 combines the genome, protein database, and RNA data to predict gene locations and functions.  
 
 ---
 
-### **📂 What’s Inside This Project?**  
-**Folders and Files**:  
+### **📂 Project Structure Explained**  
 ```  
 braker_run/  
-├── braker_directories/          📚 Recipe books for setting up tools!  
-│   ├── Download_Augustus.md     (How to get AUGUSTUS, a gene-finder)  
-│   ├── Download_GeneMark.md     (How to get GeneMark, another gene-finder)  
-├── genomes/                     🧬 Home for your hookworm DNA map!  
-├── post_braker/                 🔍 More detective work after Braker3 finishes!  
-│   ├── blast_analysis/          🔎 BLAST: Tag genes with names!  
-│   ├── busco_analysis/          ✔️ BUSCO: Check if genes are complete!  
-│   ├── interproscan_analysis/   🧩 InterProScan: Find out what genes DO!  
-│   └── orthofinder_analysis/    🌍 OrthoFinder: See which genes are in other species!  
+├── braker_directories/          # Documentation and setup guides  
+│   ├── Download_Augustus.md     # Instructions for installing AUGUSTUS  
+│   ├── Download_GeneMark.md     # Instructions for installing GeneMark  
+├── genomes/                     # Contains the hookworm genome file  
+├── post_braker/                 # Additional analyses after Braker3  
+│   ├── blast_analysis/          # BLAST: Assign functional annotations to genes  
+│   ├── busco_analysis/          # BUSCO: Assess gene completeness  
+│   ├── interproscan_analysis/   # InterProScan: Predict gene functions  
+│   └── orthofinder_analysis/    # OrthoFinder: Compare genes across species  
 ```  
 
 ---
 
-### **🎁 What You’ll Get (Outputs!)**  
-1. **Gene Map** (`braker.gtf`): A list of all the genes Braker3 found!  
-2. **Protein Recipes** (`braker.aa`): Recipes for proteins the genes make!  
-3. **Gene Pictures** (`pca_results.pdf`): Rainbow-colored graphs showing gene groups!  
+### **📊 Expected Outputs**  
+1. **Gene Predictions** (`braker.gtf`): A file listing all predicted genes and their locations.  
+2. **Protein Sequences** (`braker.aa`): A file containing the amino acid sequences of predicted proteins.  
+3. **Visualizations** (`pca_results.pdf`): Graphs showing relationships between gene groups.  
 
 ---
 
-### **🔍 After Braker3: More Fun!**  
-Run these scripts in the `post_braker/` folder:  
+### **🔍 Post-Braker3 Analysis**  
+Run these scripts in the `post_braker/` folder to further explore your results:  
 
-1. **BLAST Adventure**:  
+1. **BLAST Analysis**:  
    ```bash  
    ./run_blast.sh  
    ```  
-   *What happens?*: BLAST gives funny names to your genes (like "Super Oxygen Maker!").  
+   *What Happens*: BLAST assigns functional annotations to your genes.  
 
-2. **BUSCO Check**:  
+2. **BUSCO Analysis**:  
    ```bash  
    ./run_busco.sh  
    ```  
-   *What happens?*: BUSCO makes a report card to see if you found all the genes!  
+   *What Happens*: BUSCO evaluates the completeness of your gene set.  
 
-3. **InterProScan Quest**:  
+3. **InterProScan Analysis**:  
    ```bash  
    ./run_interproscan.sh  
    ```  
-   *What happens?*: Learn what your genes DO (like "this gene helps the worm breathe!").  
+   *What Happens*: InterProScan predicts the biological functions of your genes.  
 
 ---
 
 ### **⚠️ Troubleshooting Tips**  
-- **BAM files need XS tags**: Tell your RNA aligner to add these (use `--dta` for HISAT2 or `--outSAMstrandField` for STAR).  
-- **Permission errors**: Ask a grown-up to check if you can write to the AUGUSTUS folder.  
-- **Log files**: If Braker3 is stuck, check the `braker.log` file for clues!  
+- **BAM Files**: Ensure your BAM files include `XS` tags (use `--dta` in HISAT2 or `--outSAMstrandField` in STAR during alignment).  
+- **Permissions**: Verify you have write access to the AUGUSTUS and GeneMark directories.  
+- **Log Files**: Check `braker.log` for error messages if Braker3 fails.  
 
 ---
 
@@ -115,6 +114,6 @@ Run these scripts in the `post_braker/` folder:
 
 ---
 
-**You did it!** Now you’re a genome detective! 🎉 Share your gene maps and protein recipes with the world!  
+**Congratulations!** You’ve successfully annotated a hookworm genome. Share your findings with colleagues or explore other genomes using Braker3!  
 
-*Note: Grown-ups might need to help install Singularity or fix permissions!* 😊
+*Note: Some steps (e.g., Singularity setup) may require assistance from your IT team.* 😊
