@@ -60,7 +60,8 @@ braker_run/
 ├── braker_directories/          # Documentation and setup guides  
 │   ├── Download_Augustus.md     # Instructions for installing AUGUSTUS  
 │   ├── Download_GeneMark.md     # Instructions for installing GeneMark  
-├── genomes/                     # Contains the hookworm genome file  
+├── genomes/                     # Contains the hookworm genome file
+├── proteins/                    # Contains the hookworm protein file  
 ├── post_braker/                 # Additional analyses after Braker3  
 │   ├── blast_analysis/          # BLAST: Assign functional annotations to genes  
 │   ├── busco_analysis/          # BUSCO: Assess gene completeness  
