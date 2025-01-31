@@ -8,7 +8,7 @@
 #SBATCH --partition=batch
 
 # Directory setup
-WORK_DIR="/work/fauverlab/zachpella"
+WORK_DIR="/user"
 FAKE_HOME="$WORK_DIR/fake_home"
 FAKE_AUGUSTUS="$FAKE_HOME/.augustus"
 
