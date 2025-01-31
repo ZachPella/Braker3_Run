@@ -30,8 +30,8 @@ HOME=$FAKE_HOME singularity exec \
 -B $FAKE_HOME:$FAKE_HOME \
 $WORK_DIR/braker3.sif \
 braker.pl \
---genome=$WORK_DIR/shortened_fasta.fasta.masked \
---prot_seq=$WORK_DIR/clean_proteins.fa \
+--genome=$WORK_DIR/reference_genome.masked \
+--prot_seq=$WORK_DIR/proteins.fa \
 --rnaseq_sets_ids=SRR609857,SRR609878,SRR609884,SRR609893,SRR609894,SRR609951 \
 --species=namericanus \
 --workingdir=$WORK_DIR/braker_run \
