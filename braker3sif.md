@@ -1,80 +1,81 @@
 **🚀 BRAKER3 Singularity Adventure: Build and Run! 🧬**  
 
-Hi there! This guide will help you use BRAKER3 (a super cool gene-finding tool 🕵️) inside a magic box called Singularity. Think of Singularity as a lunchbox that holds all your tools neatly so you can take them anywhere!  
+Hi there! This guide will help you use BRAKER3—a powerful tool for finding genes in DNA—inside a Singularity container. Think of Singularity as a portable toolbox that keeps everything organized and ready to use.  
 
 ---
 
-### **📦 What You Need**  
-1. **Your Tools**:  
-   - **Singularity**: A magic lunchbox for your tools. Ask a grown-up to install it!  
-   - **Computer Power**: A laptop or big computer (like a scientist’s!).  
+### **📦 What You’ll Need**  
+1. **Tools to Install**:  
+   - **Singularity**: A container platform to manage your tools. Install it from the [Singularity Installation Guide](https://sylabs.io/guides/3.0/user-guide/installation.html).  
+   - **Computer**: A laptop or server with sufficient memory and processing power.  
 
-2. **Inputs (Your Clues)**:  
-   - **Genome File** (`genome.fa`): A file with the DNA code of your organism.  
-   - **BAM File** (`alignment.bam`): A file showing how the DNA is read by the organism’s cells.  
-   - **Species Name** (`myspecies`): The name of your organism (like "hookworm" or "fruit fly").  
-
----
-
-### **🚀 Step-by-Step Instructions**  
-
-#### **Step 1: Get Your Magic Lunchbox (Install Singularity)**  
-**Goal**: Install Singularity so you can use BRAKER3.  
-- Follow the official guide: [Singularity Installation](https://sylabs.io/guides/3.0/user-guide/installation.html).  
-- *What happens?*: You’ll have a magic lunchbox ready to hold BRAKER3!  
+2. **Input Files**:  
+   - **Genome File** (`genome.fa`): A file containing the DNA sequence of your organism.  
+   - **BAM File** (`alignment.bam`): A file with aligned RNA sequencing data.  
+   - **Species Name** (`myspecies`): The name of your organism (e.g., "hookworm" or "fruit fly").  
 
 ---
 
-#### **Step 2: Build Your Magic Lunchbox (Singularity Image)**  
-**Goal**: Put BRAKER3 inside your magic lunchbox!  
+### **🚀 Step-by-Step Guide**  
+
+#### **Step 1: Install Singularity**  
+**Goal**: Set up Singularity to create and manage containers.  
+- Follow the official installation guide: [Singularity Installation](https://sylabs.io/guides/3.0/user-guide/installation.html).  
+- *What Happens*: Once installed, you can create and run containers for tools like BRAKER3.  
+
+---
+
+#### **Step 2: Build the Singularity Image for BRAKER3**  
+**Goal**: Create a Singularity image containing BRAKER3.  
 ```bash  
 singularity build braker3.sif docker://teambraker/braker3:latest  
 ```  
-*What happens?*:  
-- `singularity build`: Builds the lunchbox.  
-- `braker3.sif`: The name of your lunchbox file.  
-- `docker://teambraker/braker3:latest`: The recipe for BRAKER3 (from the internet!).  
+*What Happens*:  
+- `singularity build`: Builds the container image.  
+- `braker3.sif`: The name of the Singularity image file.  
+- `docker://teambraker/braker3:latest`: Pulls the BRAKER3 Docker image from the internet.  
 
 ---
 
-#### **Step 3: Open Your Lunchbox and Run BRAKER3!**  
-**Goal**: Use BRAKER3 to find genes in your DNA.  
+#### **Step 3: Run BRAKER3 in the Singularity Container**  
+**Goal**: Use BRAKER3 to annotate your genome.  
 
 **Basic Command**:  
 ```bash  
 singularity exec braker3.sif braker.pl  
 ```  
-*What happens?*:  
-- `singularity exec`: Opens the lunchbox and runs a command.  
-- `braker3.sif`: Your magic lunchbox.  
-- `braker.pl`: The BRAKER3 tool inside the lunchbox.  
+*What Happens*:  
+- `singularity exec`: Runs a command inside the Singularity container.  
+- `braker3.sif`: The Singularity image containing BRAKER3.  
+- `braker.pl`: The BRAKER3 script for gene prediction.  
 
 **Example Command (With Your Files)**:  
 ```bash  
 singularity exec braker3.sif braker.pl --genome=genome.fa --bam=alignment.bam --species=myspecies  
 ```  
-*What happens?*:  
-- BRAKER3 uses your DNA map (`genome.fa`), RNA clues (`alignment.bam`), and species name (`myspecies`) to find genes!  
+*What Happens*:  
+- BRAKER3 uses the genome file (`genome.fa`), RNA alignment data (`alignment.bam`), and species name (`myspecies`) to predict genes.  
 
 ---
 
-### **📂 What’s Inside Your Lunchbox?**  
-- **BRAKER3**: A gene-finding detective!  
-- **Your Files**: The genome, BAM file, and species name are automatically available inside the lunchbox.  
+### **📂 What’s Inside the Singularity Container?**  
+- **BRAKER3**: The gene prediction tool.  
+- **Dependencies**: All necessary software (e.g., AUGUSTUS, GeneMark) are included.  
+- **Your Files**: The genome and BAM file are accessible inside the container.  
 
 ---
 
-### **🎁 What You’ll Get (Outputs!)**  
-1. **Gene Map** (`braker.gtf`): A list of all the genes BRAKER3 found!  
-2. **Protein Recipes** (`braker.aa`): Recipes for proteins the genes make!  
-3. **Gene Pictures**: Rainbow-colored graphs showing gene groups!  
+### **📊 Expected Outputs**  
+1. **Gene Predictions** (`braker.gtf`): A file listing all predicted genes and their locations.  
+2. **Protein Sequences** (`braker.aa`): A file containing the amino acid sequences of predicted proteins.  
+3. **Visualizations**: Graphs and plots showing gene relationships and annotations.  
 
 ---
 
 ### **⚠️ Troubleshooting Tips**  
-- **Missing Files**: Make sure your `genome.fa` and `alignment.bam` files are in the right place!  
-- **Permissions**: Ask a grown-up to check if you can write to the folder.  
-- **Log Files**: If BRAKER3 is stuck, check the `braker.log` file for clues!  
+- **Missing Files**: Ensure `genome.fa` and `alignment.bam` are in the correct directory.  
+- **Permissions**: Verify you have write access to the output directory.  
+- **Log Files**: Check `braker.log` for error messages if the run fails.  
 
 ---
 
@@ -84,6 +85,6 @@ singularity exec braker3.sif braker.pl --genome=genome.fa --bam=alignment.bam --
 
 ---
 
-**You did it!** Now you’re a gene-finding wizard! 🎉 Share your gene maps and protein recipes with the world!  
+**Congratulations!** You’ve successfully used BRAKER3 in a Singularity container to annotate a genome. Share your results with colleagues or explore other genomes!  
 
-*Note: Grown-ups might need to help install Singularity or fix permissions!* 😊
+*Note: Some steps (e.g., Singularity installation) may require assistance from your IT team.* 😊
