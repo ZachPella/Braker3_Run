@@ -56,8 +56,8 @@ singularity exec braker3.sif braker.pl \
 
 ### **📂 Project Structure Explained**  
 ```
-**Working Directory (users name)
-braker3.sif 
+**Working Directory
+braker3.sif
 braker_run/  
 ├── braker_directories/          # Documentation and setup guides  
 │   ├── Download_Augustus.md     # Instructions for installing AUGUSTUS  
