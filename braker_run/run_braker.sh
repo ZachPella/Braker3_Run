@@ -9,8 +9,8 @@
 
 # Directory setup
 WORK_DIR="/user"
-FAKE_HOME="$WORK_DIR/fake_home"
-FAKE_AUGUSTUS="$FAKE_HOME/.augustus"
+FAKE_HOME="$WORK_DIR/braker_run/fake_home"
+FAKE_AUGUSTUS="$FAKE_HOME/braker_run/.augustus"
 
 # Create directories if they don't exist (instead of removing)
 echo "🏗️ Setting up directories..."
@@ -30,8 +30,8 @@ HOME=$FAKE_HOME singularity exec \
 -B $FAKE_HOME:$FAKE_HOME \
 $WORK_DIR/braker3.sif \
 braker.pl \
---genome=$WORK_DIR/reference_genome.masked \
---prot_seq=$WORK_DIR/proteins.fa \
+--genome=$WORK_DIR/braker_run/genomes/reference_genome.masked \
+--prot_seq=$WORK_DIR/braker_run/proteins/proteins.fa \
 --rnaseq_sets_ids=SRR609857,SRR609878,SRR609884,SRR609893,SRR609894,SRR609951 \
 --species=namericanus \
 --workingdir=$WORK_DIR/braker_run \
