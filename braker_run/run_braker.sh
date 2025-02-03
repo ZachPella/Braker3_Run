@@ -8,9 +8,9 @@
 #SBATCH --partition=batch
 
 # Directory setup
-WORK_DIR="/user"
+WORK_DIR="/user/main"  # Updated to reflect the GitHub structure
 FAKE_HOME="$WORK_DIR/braker_run/fake_home"
-FAKE_AUGUSTUS="$FAKE_HOME/braker_run/.augustus"
+FAKE_AUGUSTUS="$FAKE_HOME/.augustus"  # Corrected path for .augustus
 
 # Create directories if they don't exist (instead of removing)
 echo "🏗️ Setting up directories..."
