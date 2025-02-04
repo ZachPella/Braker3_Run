@@ -56,21 +56,34 @@ singularity exec braker3.sif braker.pl \
 
 ### **📂 Project Structure Explained**  
 ```
-**Working Directory
-braker3.sif
-braker_run/  
-├── braker_directories/          # Documentation and setup guides  
-│   ├── Download_Augustus.md     # Instructions for installing AUGUSTUS  
-│   ├── Download_GeneMark.md     # Instructions for installing GeneMark  
-├── genomes/                     # Contains the hookworm genome file
-├── proteins/                    # Contains the hookworm protein file  
-├── post_braker/                 # Additional analyses after Braker3  
-│   ├── blast_analysis/          # BLAST: Assign functional annotations to genes  
-│   ├── busco_analysis/          # BUSCO: Assess gene completeness  
-│   ├── interproscan_analysis/   # InterProScan: Predict gene functions  
-│   └── orthofinder_analysis/    # OrthoFinder: Compare genes across species  
+braker_run/
+├── braker3.sif                   # Singularity container
+│
+├── augustus_config/              # AUGUSTUS configuration
+│
+├── GeneMark-ETP/                     # GeneMark-ETP files
+│   ├── gmes_petap.pl             # GeneMark executable
+│   └── LICENSE                   # License file
+│
+├── genomes/                      # Genome files
+│   └── trimmed_header_genome.fasta
+│
+├── proteins/                     # Protein reference files
+│   └── necator_americanus.protein.fa
+│
+├── rnaseq/                       # RNA-seq datasets
+│   └── fastq/                   # Sequencing reads
+│
+├── post_braker/                  # Post-analysis workflows
+│   ├── blast_analysis/           # Functional annotation
+│   ├── busco_analysis/           # Genome completeness
+│   ├── interproscan_analysis/    # Protein domain prediction
+│   └── orthofinder_analysis/     # Comparative genomics
+│
+└── braker_directories/           # Documentation
+   ├── Download_Augustus.md
+   └── Download_GeneMark.md 
 ```  
-
 ---
 
 ### **📊 Expected Outputs**  
