@@ -1,0 +1,134 @@
+#!/bin/bash
+
+# Script to run C. elegans pathway filter - updated to include all comparisons
+
+# Set directories
+WORK_DIR="/work/fauverlab/zachpella"
+BRAKER_DIR="$WORK_DIR/braker_run"
+SCRIPT_DIR="$BRAKER_DIR/scripts"
+ANALYSIS_DIR="$BRAKER_DIR/expression_analysis/pathway_analysis"
+
+# Create the R script
+echo "Creating R script to filter for C. elegans pathways..."
+cat > $SCRIPT_DIR/filter_cel_pathways.R << 'EOF'
+#!/usr/bin/env Rscript
+
+# Script to filter for C. elegans (R-CEL-) specific pathways
+# This script analyzes the pathway matrix to find C. elegans pathways
+
+# Define paths
+WORK_DIR <- "/work/fauverlab/zachpella"
+BRAKER_DIR <- paste0(WORK_DIR, "/braker_run")
+ANALYSIS_DIR <- paste0(BRAKER_DIR, "/expression_analysis/pathway_analysis")
+MATRIX_FILE <- paste0(ANALYSIS_DIR, "/all_comparisons_pathway_matrix.csv")
+OUTPUT_FILE <- paste0(ANALYSIS_DIR, "/celegans_pathways_summary.txt")
+
+# Check if matrix file exists
+if (!file.exists(MATRIX_FILE)) {
+  stop(paste0("Pathway matrix file not found: ", MATRIX_FILE))
+}
+
+# Read the pathway matrix
+pathway_matrix <- read.csv(MATRIX_FILE)
+
+# Get comparison names from column names
+comparison_names <- colnames(pathway_matrix)
+comparison_names <- comparison_names[!comparison_names %in% c("Pathway", "Total")]
+
+# Filter for C. elegans pathways (R-CEL-)
+cel_pathways <- pathway_matrix[grep("^R-CEL-", pathway_matrix$Pathway), ]
+
+# Sort by total count (descending)
+cel_pathways <- cel_pathways[order(-cel_pathways$Total), ]
+
+# Write summary to output file
+cat("C. elegans (R-CEL-) Pathway Summary\n", file = OUTPUT_FILE)
+cat("===================================\n\n", file = OUTPUT_FILE, append = TRUE)
+cat(paste("Total C. elegans specific pathways found:", nrow(cel_pathways), "\n\n"),
+    file = OUTPUT_FILE, append = TRUE)
+
+# Top pathways across all comparisons
+cat("Top C. elegans pathways by total gene count:\n", file = OUTPUT_FILE, append = TRUE)
+for (i in 1:min(20, nrow(cel_pathways))) {
+  path <- cel_pathways$Pathway[i]
+  counts_text <- paste(paste0(comparison_names, ": ", cel_pathways[i, comparison_names]), collapse = ", ")
+  total <- cel_pathways$Total[i]
+
+  cat(paste(i, ". ", path, " - Total: ", total, " genes (", counts_text, ")\n", sep = ""),
+      file = OUTPUT_FILE, append = TRUE)
+}
+
+# Create separate summaries for each comparison
+for (comp in comparison_names) {
+  # Sort by this comparison's count
+  comp_sorted <- cel_pathways[order(-cel_pathways[[comp]]), ]
+  # Filter for pathways present in this comparison
+  comp_filtered <- comp_sorted[comp_sorted[[comp]] > 0, ]
+
+  cat(paste("\n\nTop C. elegans pathways in", comp, ":\n"),
+      file = OUTPUT_FILE, append = TRUE)
+
+  for (i in 1:min(10, nrow(comp_filtered))) {
+    path <- comp_filtered$Pathway[i]
+    count <- comp_filtered[[comp]][i]
+
+    cat(paste(i, ". ", path, " (", count, " genes)\n", sep = ""),
+        file = OUTPUT_FILE, append = TRUE)
+  }
+}
+
+# Check for unique C. elegans pathways per comparison
+cat("\n\nUnique C. elegans pathways per comparison:\n",
+    file = OUTPUT_FILE, append = TRUE)
+
+for (comp in comparison_names) {
+  # Find pathways unique to this comparison
+  unique_mask <- rep(TRUE, nrow(cel_pathways))
+  for (other_comp in comparison_names) {
+    if (other_comp != comp) {
+      unique_mask <- unique_mask & (cel_pathways[[other_comp]] == 0)
+    }
+  }
+  unique_mask <- unique_mask & (cel_pathways[[comp]] > 0)
+
+  unique_pathways <- cel_pathways[unique_mask, ]
+
+  cat(paste("\nPathways unique to", comp, ":", nrow(unique_pathways), "\n"),
+      file = OUTPUT_FILE, append = TRUE)
+
+  if (nrow(unique_pathways) > 0) {
+    # Sort by gene count
+    unique_pathways <- unique_pathways[order(-unique_pathways[[comp]]), ]
+
+    for (i in 1:min(5, nrow(unique_pathways))) {
+      path <- unique_pathways$Pathway[i]
+      count <- unique_pathways[[comp]][i]
+
+      cat(paste("  ", i, ". ", path, " (", count, " genes)\n", sep = ""),
+          file = OUTPUT_FILE, append = TRUE)
+    }
+  }
+}
+
+# Print message to console
+cat(paste("C. elegans pathway analysis complete. Found", nrow(cel_pathways),
+         "C. elegans-specific pathways.\n"))
+cat(paste("Results saved to:", OUTPUT_FILE, "\n"))
+EOF
+
+# Make the R script executable
+chmod +x $SCRIPT_DIR/filter_cel_pathways.R
+
+# Run the script
+echo "Running C. elegans pathway filter..."
+Rscript $SCRIPT_DIR/filter_cel_pathways.R
+
+# Display the results
+if [ -f "$ANALYSIS_DIR/celegans_pathways_summary.txt" ]; then
+  echo -e "\nResults:"
+  cat "$ANALYSIS_DIR/celegans_pathways_summary.txt"
+else
+  echo "Error: Results file not found!"
+fi
+
+echo "Job completed."
