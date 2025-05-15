@@ -1,0 +1,95 @@
+#!/bin/bash
+#SBATCH --time=1:00:00
+#SBATCH --mem=16G
+#SBATCH --job-name=clustered_heatmap
+#SBATCH --output=clustered_heatmap.%j.out
+#SBATCH --error=clustered_heatmap.%j.err
+#SBATCH --cpus-per-task=2
+
+# Load required modules
+module load R
+
+# Set directories
+WORK_DIR="/work/fauverlab/zachpella"
+SCRIPT_DIR="$WORK_DIR/scripts"
+OUTPUT_DIR="$WORK_DIR/braker_run/expression_analysis"
+
+# Create scripts directory if it doesn't exist
+mkdir -p $SCRIPT_DIR
+
+# Create the R script in scripts directory
+cat > $SCRIPT_DIR/clustered_heatmap.R << 'EOF'
+#!/usr/bin/env Rscript
+
+# Load required libraries
+library(edgeR)
+library(pheatmap)
+library(viridis)  # NEW
+
+# Set working directory
+work_dir <- "/work/fauverlab/zachpella/braker_run/expression_analysis"
+setwd(work_dir)
+
+# Read in the count data
+counts_file <- "gene_counts.txt"
+count_data <- read.table(counts_file, header=TRUE, sep="\t", skip=1)
+
+# Extract gene IDs and count data
+gene_ids <- count_data$Geneid
+counts <- count_data[,7:9]  # Adjust based on actual column positions
+
+# Set column names
+colnames(counts) <- c("Female_Adult", "Male_Adult", "L3")
+
+# Create a DGEList object
+dge <- DGEList(counts = counts)
+dge <- calcNormFactors(dge)
+log_cpm <- cpm(dge, log=TRUE)
+rownames(log_cpm) <- gene_ids
+
+# Calculate z-scores for each gene
+scale_rows <- function(x) {
+  m <- apply(x, 1, mean, na.rm = TRUE)
+  s <- apply(x, 1, sd, na.rm = TRUE)
+  return((x - m) / (s + 0.0001))
+}
+z_scores <- scale_rows(log_cpm)
+
+# Sample annotations
+sample_annotation <- data.frame(
+  Stage = c("Adult", "Adult", "L3"),
+  Sex = c("Female", "Male", "NA"),
+  row.names = colnames(z_scores)
+)
+
+# Define annotation colors
+ann_colors <- list(
+  Stage = c(Adult = "#1B9E77", L3 = "#D95F02"),
+  Sex = c(Female = "#7570B3", Male = "#E7298A", "NA" = "gray80")
+)
+
+# Create clustered heatmap
+pdf("clustered_all_genes_heatmap.pdf", width=10, height=12)
+# Create clustered heatmap with better color scale
+pdf("clustered_all_genes_heatmap_better_colors.pdf", width=10, height=12)
+pheatmap(z_scores,
+         color = viridis(100),  # Use perceptually uniform viridis palette
+         cluster_cols = TRUE,
+         cluster_rows = TRUE,
+         show_rownames = FALSE,
+         annotation_col = sample_annotation,
+         annotation_colors = ann_colors,
+         main = "Clustered Expression Patterns of All Genes (Z-score scaled)",
+         fontsize = 14)
+dev.off()
+cat("Clustered heatmap created: clustered_all_genes_heatmap.pdf\n")
+EOF
+
+# Make the script executable
+chmod +x $SCRIPT_DIR/clustered_heatmap.R
+
+# Move to output directory and run script
+cd $OUTPUT_DIR
+Rscript $SCRIPT_DIR/clustered_heatmap.R
+
+echo "Clustered heatmap generation complete. Results saved to $OUTPUT_DIR"
