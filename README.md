@@ -74,6 +74,8 @@ braker_run/
 ├── rnaseq/                       # RNA-seq datasets
 │   └── fastq/                   # Sequencing reads
 │
+├── differential expression/                      
+│   
 ├── post_braker/                  # Post-analysis workflows
 │   ├── blast_analysis/           # Functional annotation
 │   ├── busco_analysis/           # Genome completeness
