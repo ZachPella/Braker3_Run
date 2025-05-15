@@ -116,6 +116,9 @@ Run these scripts in the `post_braker/` folder to further explore your results:
    ```  
    *What Happens*: InterProScan predicts the biological functions of your genes.  
 
+4. **Differential Expression Analysis**
+- **Using Interproscan Results**: You need to run interproscan to do differential analysis. Interproscan gives you reactome pathways and go terms. This is all you need for differential analysis besides the feature counts and edgeR. Interproscan is what will link the actual gene names and the functional annotations. If you don't run interproscan you will not have any connection between functional annotaitons and gene names.   
+
 ---
 
 ### **⚠️ Troubleshooting Tips**  
