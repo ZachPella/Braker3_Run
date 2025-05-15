@@ -1,4 +1,4 @@
-**🦠 Braker3 Genome Adventure: Annotate a Hookworm Genome! 🧬**  
+**🦠 Braker3 Genome Adventure: Annotate a Hookworm Genome and Stage Differential Expression Analysis! 🧬**  
 
 Hi there! This guide will help you use Braker3—a powerful tool for finding genes in DNA—to annotate a hookworm genome. No advanced bioinformatics knowledge is required!  
 
