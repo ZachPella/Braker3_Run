@@ -1,0 +1,28 @@
+import csv
+import re
+
+# Input and output file paths
+input_file = 'Adult_vs_L3_DE_genes_with_GO_terms.csv'
+output_file = 'Cleaned_Adult_vs_L3_DE_genes_with_GO_terms.csv'
+
+# Function to clean GO_Terms
+def clean_go_terms(go_terms):
+    # Remove source annotations using regex
+    cleaned_terms = re.sub(r'\(.*?\)', '', go_terms)
+    # Split terms by semicolon, remove duplicates, and sort
+    unique_terms = sorted(set(cleaned_terms.split(';')))
+    # Join terms back into a single string
+    return ';'.join(unique_terms)
+
+# Read, clean, and write the data
+with open(input_file, 'r', newline='') as infile, open(output_file, 'w', newline='') as outfile:
+    reader = csv.DictReader(infile)
+    fieldnames = reader.fieldnames
+    writer = csv.DictWriter(outfile, fieldnames=fieldnames)
+    writer.writeheader()
+    for row in reader:
+        if row['GO_Terms']:
+            row['GO_Terms'] = clean_go_terms(row['GO_Terms'])
+        writer.writerow(row)
+
+print(f"✅ Cleaning complete. Output saved to '{output_file}'.")
