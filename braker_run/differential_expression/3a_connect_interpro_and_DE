@@ -1,0 +1,35 @@
+import csv
+from collections import defaultdict
+
+# File paths
+interpro_file = "/work/fauverlab/zachpella/braker_run/braker_output_removed_dups_all_ours/my_interproscan/interproscan_results/braker_interproscan"
+de_file = "/work/fauverlab/zachpella/braker_run/expression_analysis/Adult_vs_L3_DE_genes_with_geneIDs.csv"
+output_file = "/work/fauverlab/zachpella/braker_run/expression_analysis/Adult_vs_L3_DE_genes_with_GO_terms.csv"
+
+# Step 1: Build geneID (no .t1, .t2, etc.) → GO terms mapping
+gene_to_go = defaultdict(set)
+
+with open(interpro_file) as f:
+    for line in f:
+        cols = line.strip().split('\t')
+        if len(cols) < 14 or cols[13] == "-":
+            continue
+        raw_gene = cols[0].split('.')[0]  # Drop .t1, .t2 etc.
+        go_terms = cols[13].split('|')
+        gene_to_go[raw_gene].update(go_terms)
+
+# Step 2: Add GO terms to DE file
+with open(de_file) as f_in, open(output_file, "w", newline="") as f_out:
+    reader = csv.reader(f_in)
+    writer = csv.writer(f_out)
+    header = next(reader)
+    header.append("GO_Terms")
+    writer.writerow(header)
+
+    for row in reader:
+        geneid = row[0]  # Assumes GeneID is first column
+        go_terms = sorted(gene_to_go.get(geneid, []))
+        row.append(";".join(go_terms))
+        writer.writerow(row)
+
+print(f"✅ GO terms added! Output saved to: {output_file}")
